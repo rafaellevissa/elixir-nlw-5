@@ -3,7 +3,9 @@ defmodule InmanaWeb.WelcomerController do
   alias Inmana.Welcomer
 
   def index(conn, params) do
-    params |> Welcomer.welcomer() |> handler_response(conn)
+    params
+    |> Welcomer.welcomer()
+    |> handler_response(conn)
   end
 
   def handler_response({:ok, message}, conn), do: response_handler(conn, message, :ok)
@@ -11,6 +13,8 @@ defmodule InmanaWeb.WelcomerController do
   def handler_response({:error, message}, conn), do: response_handler(conn, message, :bad_request)
 
   defp response_handler(conn, message, status) do
-    conn |> put_status(status) |> json(%{message: message})
+    conn
+    |> put_status(status)
+    |> render("index.json", message: message)
   end
 end
